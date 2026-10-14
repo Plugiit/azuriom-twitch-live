@@ -10,14 +10,14 @@ use Illuminate\Support\Collection;
 class DemoStreams
 {
     protected const TITLES = [
-        'Construction de la nouvelle capitale sur PixelCraft !',
-        'Survie hardcore sur PixelCraft – jour 42 [FR]',
-        'Skyblock PixelCraft : on vise le top 1 de l\'île',
-        'Guerre de factions ce soir sur PixelCraft !',
-        'Redstone et fermes automatiques – PixelCraft',
+        'Construction de la nouvelle capitale sur le serveur !',
+        'Survie hardcore – jour 42 [FR]',
+        'Skyblock : on vise le top 1 de l\'île',
+        'Guerre de factions ce soir sur le serveur !',
+        'Redstone et fermes automatiques',
         'Chill & discussions avec la commu',
-        'Event build : le spawn de Noël de PixelCraft',
-        'Speedrun du End sur PixelCraft',
+        'Event build : le spawn de Noël du serveur',
+        'Speedrun du End sur le serveur',
     ];
 
     /**
@@ -46,7 +46,7 @@ class DemoStreams
                 'name' => $streamer->displayName(),
                 'game_id' => $chatting ? '509658' : Settings::MINECRAFT_GAME_ID,
                 'game_name' => $chatting ? 'Just Chatting' : 'Minecraft',
-                'title' => $chatting ? 'Discussions avant la session PixelCraft' : self::TITLES[$hash % count(self::TITLES)],
+                'title' => $chatting ? 'Discussions avant la session' : self::TITLES[$hash % count(self::TITLES)],
                 'viewers' => ($streamer->is_featured ? 180 : 4) + $hash % 260,
                 'started_at' => now()->startOfHour()->subMinutes(15 + $hash % 200)->toIso8601ZuluString(),
                 'language' => 'fr',

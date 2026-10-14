@@ -1,71 +1,152 @@
+![Plugiit Twitch Live](.github/banner.png)
+
 # Plugiit Twitch Live
 
-Plugin Azuriom qui affiche les streamers de votre communauté actuellement en direct sur Twitch.
+Show which of your community's streamers are live on Twitch, with an embedded player, a theme widget and a live counter in the navbar.
 
-## Fonctionnalités
+Azuriom plugin · v1.0.0 · by Plugiit
 
-- Page publique `/plugiit-twitch-live` : cartes des lives (miniature, titre, spectateurs, durée, jeu, membre lié),
-  lecteur Twitch intégré du streamer **mis en avant** (embed `player.twitch.tv` avec `parent=` = domaine courant),
-  liste des streamers hors ligne.
-- Widget « En live maintenant » incluable dans un thème.
-- Compteur de lives optionnel dans la barre de navigation, ajouté par un middleware à côté de tout lien
-  du menu vers la page des lives (et sur le menu déroulant parent).
-- Les joueurs peuvent déclarer leur chaîne depuis leur profil (carte « Ma chaîne Twitch ») ; un administrateur
-  la valide ou la refuse.
-- Administration (permission `plugiit-twitch-live.admin`) :
-  - identifiants de l'application Twitch (Client ID / Client Secret **chiffrés** en base avec `encrypt()`) ;
-  - liste des streamers : login Twitch, membre Azuriom lié, mis en avant, statut (validé / en attente / refusé) ;
-  - filtres : seulement les lives Minecraft et/ou mot-clé obligatoire dans le titre ;
-  - durée du cache, compteur dans le menu, déclarations des joueurs ;
-  - **mode démonstration** (désactivé par défaut, signalé en admin et sur la page) qui simule des lives sans appeler Twitch ;
-  - état (nombre de lives, dernière mise à jour, dernière erreur) et bouton « Rafraîchir maintenant ».
+## Features
 
-## Intégration Twitch
+- **Live streams page** at `/plugiit-twitch-live`: one card per stream with thumbnail, title, viewer count, stream duration, game and linked website member.
+- **Featured streamer**: the Twitch player of the featured streamer currently live is embedded at the top of the page (`player.twitch.tv`, with `parent=` set to the current domain).
+- **Offline streamers** listed below the live streams.
+- **"Live now" widget** to include in any theme view.
+- **Optional live counter in the navbar**, added next to every navbar link pointing to the live page (and on its parent dropdown toggle). It only reads the cache and never calls Twitch.
+- **Channel declaration by players** from their profile ("My Twitch channel" card). An administrator approves or rejects each declared channel.
+- **Filters**: only Minecraft streams and/or a required keyword in the stream title (case insensitive).
+- **Resilient**: on a network or API error, the page keeps working and shows the last known state with a warning. The error is logged and visible in the admin panel, and a new attempt is made after one minute.
+- **Demo mode** (disabled by default) that simulates streams from the streamers list without calling Twitch, clearly flagged in the admin panel and on the public page.
+- **Encrypted credentials**: the Twitch Client ID and Client Secret are stored encrypted in the database.
+- Action log entries for streamers (created, updated, deleted) and settings changes.
+- English and French translations.
 
-- Jeton d'application via *client credentials* (`POST https://id.twitch.tv/oauth2/token`), mis en cache jusqu'à
-  son expiration (moins 5 minutes) et renouvelé automatiquement si Twitch répond 401.
-- `GET /helix/streams?user_login=…` par lots de 100 logins.
-- `GET /helix/users?login=…` pour les noms et avatars (mis en cache 24 h et enregistrés sur les streamers).
-- Erreurs réseau ou API : la page reste fonctionnelle et affiche le **dernier état connu** avec un avertissement ;
-  l'erreur est journalisée et visible dans l'administration. Nouvel essai au bout d'une minute.
+## Requirements
 
-## Rafraîchissement
+- Azuriom `1.1.0` or later (`azuriom_api` 1.1.0).
+- A **Twitch application** (Client ID and Client Secret) created on the [Twitch developer console](https://dev.twitch.tv/console/apps).
+- Outbound HTTPS access from your web server to `id.twitch.tv` and `api.twitch.tv`.
+- Recommended: the Laravel scheduler cron, so streams are refreshed in the background:
 
-- Tâche planifiée `plugiit-twitch-live:refresh` enregistrée dans le planificateur Laravel (chaque minute,
-  sans chevauchement). Elle n'appelle Twitch que lorsque le cache a expiré (`--force` pour forcer).
-  Nécessite le cron Azuriom habituel : `* * * * * php /chemin/azuriom/artisan schedule:run`.
-- Sans cron, les lives sont rafraîchis à la demande lors des visites, au plus une fois par durée de cache.
-- Le compteur du menu n'appelle jamais Twitch : il lit uniquement le cache.
+  ```
+  * * * * * cd /path/to/azuriom && php artisan schedule:run >> /dev/null 2>&1
+  ```
+
+  Without the cron, streams are refreshed on demand during visits, at most once per cache duration.
 
 ## Installation
 
-1. Copiez le dossier dans `plugins/plugiit-twitch-live` et activez le plugin dans **Admin › Extensions**.
-2. Créez une application sur <https://dev.twitch.tv/console/apps> (catégorie « Website Integration »,
-   URL de redirection `http://localhost`), puis renseignez le Client ID et un secret dans
-   **Admin › Twitch Live › Paramètres**.
-3. Ajoutez vos streamers dans **Admin › Twitch Live › Streamers**.
-4. Ajoutez la page au menu : **Admin › Navigation**, type « Plugin », route « Streamers en direct ».
+**From the Azuriom Market** (recommended): install and enable the plugin from **Admin → Plugins**.
 
-## Widget pour les thèmes
+**Manually**:
+
+1. Copy the plugin into the `plugins/` directory of your Azuriom installation. The folder **must be named after the plugin ID**, not after the repository:
+
+   ```
+   plugins/plugiit-twitch-live/
+   ```
+
+2. Enable the plugin from **Admin → Plugins**. The migrations create the `plugiit_twitch_live_streamers` table.
+
+Then:
+
+1. Create an application on <https://dev.twitch.tv/console/apps> (category "Website Integration", OAuth redirect URL `http://localhost`) and generate a secret.
+2. Enter the Client ID and Client Secret in **Admin → Twitch Live → Settings**.
+3. Add your streamers in **Admin → Twitch Live → Streamers**.
+4. Add the page to your navbar: **Admin → Navbar**, type "Plugin", route "Live streamers".
+
+## Configuration
+
+### Permission
+
+| Permission | Description |
+| --- | --- |
+| `plugiit-twitch-live.admin` | Manage Twitch streamers |
+
+### Streamers
+
+**Admin → Twitch Live → Streamers** (`/admin/plugiit-twitch-live/streamers`):
+
+| Field | Description |
+| --- | --- |
+| Twitch login | The name in the `twitch.tv/<name>` address (4 to 25 letters, digits or `_`). Must be unique. |
+| Linked website member | Exact username of an Azuriom member (optional). |
+| Featured | Featured streamers are listed first and their Twitch player is embedded on the page. |
+| Status | Approved, pending or rejected. Only approved streamers are displayed. |
+
+Channels declared by players appear in a separate "Channels declared by players" list, with **Approve** and **Reject** buttons. The streamers list also shows which channels are currently live.
+
+### Settings
+
+**Admin → Twitch Live → Settings** (`/admin/plugiit-twitch-live/settings`):
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Client ID / Client Secret | none | Twitch application credentials, stored encrypted. Leave the secret empty to keep the saved one. |
+| Only Minecraft streams | Off | Keep only streams whose game is Minecraft. |
+| Required keyword in the title | none | Keep only streams whose title contains this keyword. |
+| Cache duration | 3 minutes | Between 1 and 60 minutes. Maximum frequency of the Twitch API calls. |
+| Navbar live counter | On | Show the number of live streams next to the "Live streamers" navbar link. |
+| Player channel declarations | On | Allow players to declare their channel from their profile. |
+| Demo mode | Off | Simulate streams without calling Twitch. Disable it in production. |
+
+The settings page also shows the current status (number of live streams, last update, last error) and a **Refresh now** button.
+
+## Usage
+
+### Public pages
+
+| Page | URL |
+| --- | --- |
+| Live streams | `/plugiit-twitch-live` |
+| Declare / update a channel (logged-in players) | `POST /plugiit-twitch-live/channel` |
+| Remove the declared channel (logged-in players) | `DELETE /plugiit-twitch-live/channel` |
+
+The channel routes are used by the profile card and are rate-limited (10 requests per minute).
+
+### Theme widget
 
 ```blade
 @include('plugiit-twitch-live::widget')
 @include('plugiit-twitch-live::widget', ['limit' => 3, 'hideWhenEmpty' => true])
 ```
 
-## Tests
+| Parameter | Default | Description |
+| --- | --- | --- |
+| `limit` | `5` | Maximum number of streams listed. |
+| `hideWhenEmpty` | `false` | Render nothing when nobody is live. |
 
-Tests PHPUnit du client Helix avec `Http::fake()` (parsing des réponses, lots de 100, cache et
-renouvellement du jeton, erreurs) :
+### Artisan command
+
+```sh
+php artisan plugiit-twitch-live:refresh          # refresh only if the cache has expired
+php artisan plugiit-twitch-live:refresh --force  # refresh now
+```
+
+This command is registered in the Laravel scheduler (every minute, without overlapping). It only calls Twitch when the cache has expired.
+
+## How the Twitch integration works
+
+- App access token obtained with the client credentials flow (`POST https://id.twitch.tv/oauth2/token`), cached until it expires (minus 5 minutes) and renewed automatically if Twitch answers `401`.
+- `GET /helix/streams?user_login=…` in batches of 100 logins.
+- `GET /helix/users?login=…` for display names and avatars, cached for 24 hours and stored on the streamers.
+
+## Development
+
+PHPUnit tests for the Helix client (`Http::fake()`: response parsing, batches of 100, token caching and renewal, errors):
 
 ```sh
 vendor/bin/phpunit plugins/plugiit-twitch-live/tests
 ```
 
-## URL
+## Support
 
-| Page | URL |
-|---|---|
-| Lives | `/plugiit-twitch-live` |
-| Déclaration de chaîne (POST/DELETE, connecté) | `/plugiit-twitch-live/channel` |
-| Administration | `/admin/plugiit-twitch-live/streamers`, `/admin/plugiit-twitch-live/settings` |
+Open an issue on GitHub or contact Plugiit.
+
+## Contributing
+
+Issues and pull requests are welcome.
+
+## License
+
+License: to be defined.

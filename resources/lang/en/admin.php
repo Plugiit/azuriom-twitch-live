@@ -43,7 +43,7 @@ return [
         'filters' => 'Filters',
         'only_minecraft' => 'Only display streams whose game is Minecraft',
         'title_keyword' => 'Required keyword in the stream title',
-        'title_keyword_help' => 'For example "PixelCraft". Leave empty to disable. Case insensitive.',
+        'title_keyword_help' => 'For example "MyServer". Leave empty to disable. Case insensitive.',
         'display' => 'Display',
         'cache_minutes' => 'Cache duration',
         'cache_minutes_help' => 'Maximum frequency of the Twitch API calls. The scheduled task refreshes the streams as soon as the cache expires.',

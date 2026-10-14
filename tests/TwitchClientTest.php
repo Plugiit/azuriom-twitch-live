@@ -48,7 +48,7 @@ class TwitchClientTest extends TestCase
                     'game_id' => '27471',
                     'game_name' => 'Minecraft',
                     'type' => 'live',
-                    'title' => 'Survie sur PixelCraft !',
+                    'title' => 'Survie sur le serveur !',
                     'viewer_count' => 1234,
                     'started_at' => '2026-10-14T08:00:00Z',
                     'language' => 'fr',

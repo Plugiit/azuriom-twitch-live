@@ -43,7 +43,7 @@ return [
         'filters' => 'Filtres',
         'only_minecraft' => 'Afficher seulement les lives dont le jeu est Minecraft',
         'title_keyword' => 'Mot-clé obligatoire dans le titre du live',
-        'title_keyword_help' => 'Par exemple « PixelCraft ». Laissez vide pour ne pas filtrer. Insensible à la casse.',
+        'title_keyword_help' => 'Par exemple « MonServeur ». Laissez vide pour ne pas filtrer. Insensible à la casse.',
         'display' => 'Affichage',
         'cache_minutes' => 'Durée du cache',
         'cache_minutes_help' => 'Fréquence maximale des appels à l\'API Twitch. La tâche planifiée rafraîchit les lives dès que le cache expire.',
