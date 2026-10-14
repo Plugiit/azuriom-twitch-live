@@ -1,0 +1,24 @@
+{
+    "name": "azuriom/plugiit-twitch-live",
+    "type": "azuriom-plugin",
+    "description": "Affichez les streamers de votre communauté en direct sur Twitch : API Helix, filtres Minecraft et mot-clé, lecteur intégré, widget « En live maintenant », compteur dans le menu et déclaration des chaînes par les joueurs.",
+    "autoload": {
+        "psr-4": {
+            "Azuriom\\Plugin\\PlugiitTwitchLive\\": "src/"
+        }
+    },
+    "replace": {
+        "guzzlehttp/guzzle": "*",
+        "guzzlehttp/promises": "*",
+        "guzzlehttp/psr7": "*",
+        "monolog/monolog": "*",
+        "nesbot/carbon": "*",
+        "psr/container": "*",
+        "psr/event-dispatcher": "*",
+        "psr/http-client": "*",
+        "psr/http-factory": "*",
+        "psr/http-message": "*",
+        "psr/log": "*",
+        "psr/simple-cache": "*"
+    }
+}
