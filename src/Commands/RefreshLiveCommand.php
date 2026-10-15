@@ -1,8 +1,8 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Commands;
+namespace Azuriom\Plugin\TwitchLive\Commands;
 
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\LiveStreams;
+use Azuriom\Plugin\TwitchLive\Twitch\LiveStreams;
 use Illuminate\Console\Command;
 
 class RefreshLiveCommand extends Command
@@ -12,7 +12,7 @@ class RefreshLiveCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'plugiit-twitch-live:refresh {--force : Refresh even if the cache is still valid}';
+    protected $signature = 'twitch-live:refresh {--force : Refresh even if the cache is still valid}';
 
     /**
      * The console command description.

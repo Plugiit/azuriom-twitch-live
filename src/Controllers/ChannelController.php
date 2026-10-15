@@ -1,10 +1,10 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Controllers;
+namespace Azuriom\Plugin\TwitchLive\Controllers;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\Settings;
+use Azuriom\Plugin\TwitchLive\Models\Streamer;
+use Azuriom\Plugin\TwitchLive\Twitch\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -25,9 +25,9 @@ class ChannelController extends Controller
         $validated = $request->validate([
             'login' => [
                 'required', 'string', 'regex:'.Streamer::LOGIN_REGEX,
-                Rule::unique('plugiit_twitch_live_streamers', 'login')->ignore($current?->id),
+                Rule::unique('twitch_live_streamers', 'login')->ignore($current?->id),
             ],
-        ], [], ['login' => trans('plugiit-twitch-live::messages.fields.login')]);
+        ], [], ['login' => trans('twitch-live::messages.fields.login')]);
 
         if ($current !== null && $current->login === $validated['login'] && ! $current->isPending()) {
             return redirect()->route('profile.index');
@@ -44,7 +44,7 @@ class ChannelController extends Controller
         }
 
         return redirect()->route('profile.index')
-            ->with('success', trans('plugiit-twitch-live::messages.profile.submitted'));
+            ->with('success', trans('twitch-live::messages.profile.submitted'));
     }
 
     public function destroy(Request $request)
@@ -52,6 +52,6 @@ class ChannelController extends Controller
         Streamer::where('user_id', $request->user()->id)->delete();
 
         return redirect()->route('profile.index')
-            ->with('success', trans('plugiit-twitch-live::messages.profile.removed'));
+            ->with('success', trans('twitch-live::messages.profile.removed'));
     }
 }

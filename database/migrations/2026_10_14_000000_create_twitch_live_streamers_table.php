@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plugiit_twitch_live_streamers', function (Blueprint $table) {
+        Schema::create('twitch_live_streamers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('login', 25)->unique();
             $table->unsignedInteger('user_id')->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plugiit_twitch_live_streamers');
+        Schema::dropIfExists('twitch_live_streamers');
     }
 };

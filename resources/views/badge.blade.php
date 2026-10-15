@@ -1,7 +1,7 @@
 <script>
     (function () {
         var url = @json($url);
-        var label = @json(trans('plugiit-twitch-live::messages.badge', ['count' => $count]));
+        var label = @json(trans('twitch-live::messages.badge', ['count' => $count]));
         var links = document.querySelectorAll('a[href="' + url + '"]');
 
         links.forEach(function (link) {

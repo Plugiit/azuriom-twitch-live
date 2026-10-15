@@ -1,11 +1,11 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Controllers\Admin;
+namespace Azuriom\Plugin\TwitchLive\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer;
-use Azuriom\Plugin\PlugiitTwitchLive\Requests\StreamerRequest;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\LiveStreams;
+use Azuriom\Plugin\TwitchLive\Models\Streamer;
+use Azuriom\Plugin\TwitchLive\Requests\StreamerRequest;
+use Azuriom\Plugin\TwitchLive\Twitch\LiveStreams;
 
 class StreamerController extends Controller
 {
@@ -16,7 +16,7 @@ class StreamerController extends Controller
     {
         $liveLogins = collect($liveStreams->cachedState()['streams'] ?? [])->pluck('login');
 
-        return view('plugiit-twitch-live::admin.streamers.index', [
+        return view('twitch-live::admin.streamers.index', [
             'pending' => Streamer::pending()->with('user')->latest()->get(),
             'streamers' => Streamer::where('status', '!=', 'pending')
                 ->with('user')
@@ -29,20 +29,20 @@ class StreamerController extends Controller
 
     public function create()
     {
-        return view('plugiit-twitch-live::admin.streamers.create');
+        return view('twitch-live::admin.streamers.create');
     }
 
     public function store(StreamerRequest $request)
     {
         Streamer::create($request->streamerData());
 
-        return to_route('plugiit-twitch-live.admin.streamers.index')
+        return to_route('twitch-live.admin.streamers.index')
             ->with('success', trans('messages.status.success'));
     }
 
     public function edit(Streamer $streamer)
     {
-        return view('plugiit-twitch-live::admin.streamers.edit', [
+        return view('twitch-live::admin.streamers.edit', [
             'streamer' => $streamer->load('user'),
         ]);
     }
@@ -51,7 +51,7 @@ class StreamerController extends Controller
     {
         $streamer->update($request->streamerData());
 
-        return to_route('plugiit-twitch-live.admin.streamers.index')
+        return to_route('twitch-live.admin.streamers.index')
             ->with('success', trans('messages.status.success'));
     }
 
@@ -59,7 +59,7 @@ class StreamerController extends Controller
     {
         $streamer->delete();
 
-        return to_route('plugiit-twitch-live.admin.streamers.index')
+        return to_route('twitch-live.admin.streamers.index')
             ->with('success', trans('messages.status.success'));
     }
 
@@ -67,15 +67,15 @@ class StreamerController extends Controller
     {
         $streamer->update(['status' => 'approved']);
 
-        return to_route('plugiit-twitch-live.admin.streamers.index')
-            ->with('success', trans('plugiit-twitch-live::admin.streamers.approved', ['login' => $streamer->login]));
+        return to_route('twitch-live.admin.streamers.index')
+            ->with('success', trans('twitch-live::admin.streamers.approved', ['login' => $streamer->login]));
     }
 
     public function reject(Streamer $streamer)
     {
         $streamer->update(['status' => 'rejected']);
 
-        return to_route('plugiit-twitch-live.admin.streamers.index')
-            ->with('success', trans('plugiit-twitch-live::admin.streamers.rejected', ['login' => $streamer->login]));
+        return to_route('twitch-live.admin.streamers.index')
+            ->with('success', trans('twitch-live::admin.streamers.rejected', ['login' => $streamer->login]));
     }
 }

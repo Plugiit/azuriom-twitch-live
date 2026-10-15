@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Twitch;
+namespace Azuriom\Plugin\TwitchLive\Twitch;
 
 use RuntimeException;
 

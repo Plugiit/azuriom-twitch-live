@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Twitch;
+namespace Azuriom\Plugin\TwitchLive\Twitch;
 
 use Illuminate\Contracts\Encryption\DecryptException;
 
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
  */
 class Settings
 {
-    public const PREFIX = 'plugiit-twitch-live.';
+    public const PREFIX = 'twitch-live.';
 
     /**
      * Twitch category id of Minecraft.

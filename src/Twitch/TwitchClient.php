@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Twitch;
+namespace Azuriom\Plugin\TwitchLive\Twitch;
 
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
@@ -29,7 +29,7 @@ class TwitchClient
     /**
      * Get an app access token, cached until it expires.
      *
-     * @throws \Azuriom\Plugin\PlugiitTwitchLive\Twitch\TwitchException
+     * @throws \Azuriom\Plugin\TwitchLive\Twitch\TwitchException
      */
     public function appToken(bool $fresh = false): string
     {
@@ -74,7 +74,7 @@ class TwitchClient
      * @param  string[]  $logins
      * @return array<int, array<string, mixed>>
      *
-     * @throws \Azuriom\Plugin\PlugiitTwitchLive\Twitch\TwitchException
+     * @throws \Azuriom\Plugin\TwitchLive\Twitch\TwitchException
      */
     public function streams(array $logins): array
     {
@@ -97,7 +97,7 @@ class TwitchClient
      * @param  string[]  $logins
      * @return array<string, array{id: string, login: string, display_name: string, avatar: string|null}>
      *
-     * @throws \Azuriom\Plugin\PlugiitTwitchLive\Twitch\TwitchException
+     * @throws \Azuriom\Plugin\TwitchLive\Twitch\TwitchException
      */
     public function users(array $logins): array
     {
@@ -155,7 +155,7 @@ class TwitchClient
      * @param  string[]  $values
      * @return array<int, array<string, mixed>>
      *
-     * @throws \Azuriom\Plugin\PlugiitTwitchLive\Twitch\TwitchException
+     * @throws \Azuriom\Plugin\TwitchLive\Twitch\TwitchException
      */
     protected function get(string $endpoint, string $parameter, array $values, array $query = []): array
     {
@@ -220,6 +220,6 @@ class TwitchClient
 
     protected function tokenCacheKey(): string
     {
-        return 'plugiit-twitch-live.token.'.sha1($this->clientId.'|'.$this->clientSecret);
+        return 'twitch-live.token.'.sha1($this->clientId.'|'.$this->clientSecret);
     }
 }

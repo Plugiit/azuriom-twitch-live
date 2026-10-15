@@ -1,9 +1,9 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Middleware;
+namespace Azuriom\Plugin\TwitchLive\Middleware;
 
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\LiveStreams;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\Settings;
+use Azuriom\Plugin\TwitchLive\Twitch\LiveStreams;
+use Azuriom\Plugin\TwitchLive\Twitch\Settings;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -35,9 +35,9 @@ class InjectLiveBadge
             return $response;
         }
 
-        $html = view('plugiit-twitch-live::badge', [
+        $html = view('twitch-live::badge', [
             'count' => $count,
-            'url' => route('plugiit-twitch-live.index'),
+            'url' => route('twitch-live.index'),
         ])->render();
 
         $response->setContent(substr_replace($content, $html, $position, 0));
@@ -54,7 +54,7 @@ class InjectLiveBadge
             && ! $request->is('admin', 'admin/*', 'api/*')
             && $response->getStatusCode() === 200
             && str_contains((string) $response->headers->get('Content-Type'), 'text/html')
-            && Route::has('plugiit-twitch-live.index')
+            && Route::has('twitch-live.index')
             && Settings::navbarBadge();
     }
 }

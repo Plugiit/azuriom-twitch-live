@@ -1,7 +1,7 @@
 <?php
 
-use Azuriom\Plugin\PlugiitTwitchLive\Controllers\Admin\SettingController;
-use Azuriom\Plugin\PlugiitTwitchLive\Controllers\Admin\StreamerController;
+use Azuriom\Plugin\TwitchLive\Controllers\Admin\SettingController;
+use Azuriom\Plugin\TwitchLive\Controllers\Admin\StreamerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('can:plugiit-twitch-live.admin')->group(function () {
+Route::middleware('can:twitch-live.admin')->group(function () {
     Route::get('/settings', [SettingController::class, 'show'])->name('settings');
     Route::post('/settings', [SettingController::class, 'save'])->name('settings.save');
     Route::post('/refresh', [SettingController::class, 'refresh'])->name('refresh');

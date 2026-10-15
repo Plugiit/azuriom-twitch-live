@@ -8,7 +8,7 @@ Azuriom plugin · v1.0.0 · by Plugiit
 
 ## Features
 
-- **Live streams page** at `/plugiit-twitch-live`: one card per stream with thumbnail, title, viewer count, stream duration, game and linked website member.
+- **Live streams page** at `/twitch-live`: one card per stream with thumbnail, title, viewer count, stream duration, game and linked website member.
 - **Featured streamer**: the Twitch player of the featured streamer currently live is embedded at the top of the page (`player.twitch.tv`, with `parent=` set to the current domain).
 - **Offline streamers** listed below the live streams.
 - **"Live now" widget** to include in any theme view.
@@ -43,10 +43,10 @@ Azuriom plugin · v1.0.0 · by Plugiit
 1. Copy the plugin into the `plugins/` directory of your Azuriom installation. The folder **must be named after the plugin ID**, not after the repository:
 
    ```
-   plugins/plugiit-twitch-live/
+   plugins/twitch-live/
    ```
 
-2. Enable the plugin from **Admin → Plugins**. The migrations create the `plugiit_twitch_live_streamers` table.
+2. Enable the plugin from **Admin → Plugins**. The migrations create the `twitch_live_streamers` table.
 
 Then:
 
@@ -61,11 +61,11 @@ Then:
 
 | Permission | Description |
 | --- | --- |
-| `plugiit-twitch-live.admin` | Manage Twitch streamers |
+| `twitch-live.admin` | Manage Twitch streamers |
 
 ### Streamers
 
-**Admin → Twitch Live → Streamers** (`/admin/plugiit-twitch-live/streamers`):
+**Admin → Twitch Live → Streamers** (`/admin/twitch-live/streamers`):
 
 | Field | Description |
 | --- | --- |
@@ -78,7 +78,7 @@ Channels declared by players appear in a separate "Channels declared by players"
 
 ### Settings
 
-**Admin → Twitch Live → Settings** (`/admin/plugiit-twitch-live/settings`):
+**Admin → Twitch Live → Settings** (`/admin/twitch-live/settings`):
 
 | Setting | Default | Description |
 | --- | --- | --- |
@@ -98,17 +98,17 @@ The settings page also shows the current status (number of live streams, last up
 
 | Page | URL |
 | --- | --- |
-| Live streams | `/plugiit-twitch-live` |
-| Declare / update a channel (logged-in players) | `POST /plugiit-twitch-live/channel` |
-| Remove the declared channel (logged-in players) | `DELETE /plugiit-twitch-live/channel` |
+| Live streams | `/twitch-live` |
+| Declare / update a channel (logged-in players) | `POST /twitch-live/channel` |
+| Remove the declared channel (logged-in players) | `DELETE /twitch-live/channel` |
 
 The channel routes are used by the profile card and are rate-limited (10 requests per minute).
 
 ### Theme widget
 
 ```blade
-@include('plugiit-twitch-live::widget')
-@include('plugiit-twitch-live::widget', ['limit' => 3, 'hideWhenEmpty' => true])
+@include('twitch-live::widget')
+@include('twitch-live::widget', ['limit' => 3, 'hideWhenEmpty' => true])
 ```
 
 | Parameter | Default | Description |
@@ -119,8 +119,8 @@ The channel routes are used by the profile card and are rate-limited (10 request
 ### Artisan command
 
 ```sh
-php artisan plugiit-twitch-live:refresh          # refresh only if the cache has expired
-php artisan plugiit-twitch-live:refresh --force  # refresh now
+php artisan twitch-live:refresh          # refresh only if the cache has expired
+php artisan twitch-live:refresh --force  # refresh now
 ```
 
 This command is registered in the Laravel scheduler (every minute, without overlapping). It only calls Twitch when the cache has expired.
@@ -136,7 +136,7 @@ This command is registered in the Laravel scheduler (every minute, without overl
 PHPUnit tests for the Helix client (`Http::fake()`: response parsing, batches of 100, token caching and renewal, errors):
 
 ```sh
-vendor/bin/phpunit plugins/plugiit-twitch-live/tests
+vendor/bin/phpunit plugins/twitch-live/tests
 ```
 
 ## Support

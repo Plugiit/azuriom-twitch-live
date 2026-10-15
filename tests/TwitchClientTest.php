@@ -1,9 +1,9 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Tests;
+namespace Azuriom\Plugin\TwitchLive\Tests;
 
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\TwitchClient;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\TwitchException;
+use Azuriom\Plugin\TwitchLive\Twitch\TwitchClient;
+use Azuriom\Plugin\TwitchLive\Twitch\TwitchException;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 /**
  * Run from the Azuriom root:
- *   vendor/bin/phpunit plugins/plugiit-twitch-live/tests
+ *   vendor/bin/phpunit plugins/twitch-live/tests
  */
 class TwitchClientTest extends TestCase
 {

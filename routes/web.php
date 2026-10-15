@@ -1,7 +1,7 @@
 <?php
 
-use Azuriom\Plugin\PlugiitTwitchLive\Controllers\ChannelController;
-use Azuriom\Plugin\PlugiitTwitchLive\Controllers\TwitchLiveController;
+use Azuriom\Plugin\TwitchLive\Controllers\ChannelController;
+use Azuriom\Plugin\TwitchLive\Controllers\TwitchLiveController;
 use Illuminate\Support\Facades\Route;
 
 /*

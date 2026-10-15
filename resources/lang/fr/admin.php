@@ -64,7 +64,7 @@ return [
         'never' => 'Jamais',
         'error' => 'Dernière erreur',
         'not_configured' => 'Identifiants Twitch manquants : aucun live ne peut être récupéré.',
-        'scheduler' => 'La tâche planifiée « plugiit-twitch-live:refresh » rafraîchit les lives automatiquement si le planificateur Laravel est configuré (cron « php artisan schedule:run » chaque minute). Sinon, les lives sont rafraîchis à la demande lors des visites, selon la durée du cache.',
+        'scheduler' => 'La tâche planifiée « twitch-live:refresh » rafraîchit les lives automatiquement si le planificateur Laravel est configuré (cron « php artisan schedule:run » chaque minute). Sinon, les lives sont rafraîchis à la demande lors des visites, selon la durée du cache.',
     ],
 
     'refresh' => [
@@ -74,7 +74,7 @@ return [
     ],
 
     'logs' => [
-        'plugiit-twitch-live-streamers' => [
+        'twitch-live-streamers' => [
             'created' => 'Ajout du streamer #:id',
             'updated' => 'Mise à jour du streamer #:id',
             'deleted' => 'Suppression du streamer #:id',

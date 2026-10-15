@@ -1,10 +1,10 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Requests;
+namespace Azuriom\Plugin\TwitchLive\Requests;
 
 use Azuriom\Http\Requests\Traits\ConvertCheckbox;
 use Azuriom\Models\User;
-use Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer;
+use Azuriom\Plugin\TwitchLive\Models\Streamer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -43,7 +43,7 @@ class StreamerRequest extends FormRequest
         return [
             'login' => [
                 'required', 'string', 'regex:'.Streamer::LOGIN_REGEX,
-                Rule::unique('plugiit_twitch_live_streamers', 'login')->ignore($streamer?->id),
+                Rule::unique('twitch_live_streamers', 'login')->ignore($streamer?->id),
             ],
             'user_name' => ['nullable', 'string', 'max:50', 'exists:users,name'],
             'is_featured' => ['boolean'],
@@ -70,8 +70,8 @@ class StreamerRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'login' => trans('plugiit-twitch-live::messages.fields.login'),
-            'user_name' => trans('plugiit-twitch-live::admin.streamers.member'),
+            'login' => trans('twitch-live::messages.fields.login'),
+            'user_name' => trans('twitch-live::admin.streamers.member'),
         ];
     }
 }

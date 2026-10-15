@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Twitch;
+namespace Azuriom\Plugin\TwitchLive\Twitch;
 
 use Illuminate\Support\Collection;
 
@@ -21,7 +21,7 @@ class DemoStreams
     ];
 
     /**
-     * @param  \Illuminate\Support\Collection<int, \Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer>  $streamers
+     * @param  \Illuminate\Support\Collection<int, \Azuriom\Plugin\TwitchLive\Models\Streamer>  $streamers
      * @return array<int, array<string, mixed>>
      */
     public static function generate(Collection $streamers): array
@@ -50,7 +50,7 @@ class DemoStreams
                 'viewers' => ($streamer->is_featured ? 180 : 4) + $hash % 260,
                 'started_at' => now()->startOfHour()->subMinutes(15 + $hash % 200)->toIso8601ZuluString(),
                 'language' => 'fr',
-                'thumbnail' => plugin_asset('plugiit-twitch-live', 'img/demo-'.(($index % 4) + 1).'.svg'),
+                'thumbnail' => plugin_asset('twitch-live', 'img/demo-'.(($index % 4) + 1).'.svg'),
             ];
         }
 

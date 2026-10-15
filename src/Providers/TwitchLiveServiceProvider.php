@@ -1,19 +1,19 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Providers;
+namespace Azuriom\Plugin\TwitchLive\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Permission;
-use Azuriom\Plugin\PlugiitTwitchLive\Commands\RefreshLiveCommand;
-use Azuriom\Plugin\PlugiitTwitchLive\Middleware\InjectLiveBadge;
-use Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\LiveStreams;
-use Azuriom\Plugin\PlugiitTwitchLive\View\ProfileCardComposer;
+use Azuriom\Plugin\TwitchLive\Commands\RefreshLiveCommand;
+use Azuriom\Plugin\TwitchLive\Middleware\InjectLiveBadge;
+use Azuriom\Plugin\TwitchLive\Models\Streamer;
+use Azuriom\Plugin\TwitchLive\Twitch\LiveStreams;
+use Azuriom\Plugin\TwitchLive\View\ProfileCardComposer;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\View;
 
-class PlugiitTwitchLiveServiceProvider extends BasePluginServiceProvider
+class TwitchLiveServiceProvider extends BasePluginServiceProvider
 {
     /**
      * The plugin's global HTTP middleware stack.
@@ -48,17 +48,17 @@ class PlugiitTwitchLiveServiceProvider extends BasePluginServiceProvider
         $this->registerAdminNavigation();
 
         Permission::registerPermissions([
-            'plugiit-twitch-live.admin' => 'plugiit-twitch-live::admin.permission',
+            'twitch-live.admin' => 'twitch-live::admin.permission',
         ]);
 
         ActionLog::registerLogModels([
             Streamer::class,
-        ], 'plugiit-twitch-live::admin.logs');
+        ], 'twitch-live::admin.logs');
 
-        ActionLog::registerLogs('plugiit-twitch-live.settings.updated', [
+        ActionLog::registerLogs('twitch-live.settings.updated', [
             'icon' => 'twitch',
             'color' => 'info',
-            'message' => 'plugiit-twitch-live::admin.logs.settings',
+            'message' => 'twitch-live::admin.logs.settings',
         ]);
 
         View::composer('profile.index', ProfileCardComposer::class);
@@ -74,7 +74,7 @@ class PlugiitTwitchLiveServiceProvider extends BasePluginServiceProvider
     protected function schedule(Schedule $schedule): void
     {
         // The command only calls Twitch when the cached state has expired.
-        $schedule->command('plugiit-twitch-live:refresh')
+        $schedule->command('twitch-live:refresh')
             ->everyMinute()
             ->withoutOverlapping()
             ->runInBackground();
@@ -88,7 +88,7 @@ class PlugiitTwitchLiveServiceProvider extends BasePluginServiceProvider
     protected function routeDescriptions(): array
     {
         return [
-            'plugiit-twitch-live.index' => trans('plugiit-twitch-live::messages.title'),
+            'twitch-live.index' => trans('twitch-live::messages.title'),
         ];
     }
 
@@ -100,15 +100,15 @@ class PlugiitTwitchLiveServiceProvider extends BasePluginServiceProvider
     protected function adminNavigation(): array
     {
         return [
-            'plugiit-twitch-live' => [
-                'name' => trans('plugiit-twitch-live::admin.nav.title'),
+            'twitch-live' => [
+                'name' => trans('twitch-live::admin.nav.title'),
                 'type' => 'dropdown',
                 'icon' => 'bi bi-twitch',
-                'route' => 'plugiit-twitch-live.admin.*',
-                'permission' => 'plugiit-twitch-live.admin',
+                'route' => 'twitch-live.admin.*',
+                'permission' => 'twitch-live.admin',
                 'items' => [
-                    'plugiit-twitch-live.admin.streamers.index' => trans('plugiit-twitch-live::admin.nav.streamers'),
-                    'plugiit-twitch-live.admin.settings' => trans('plugiit-twitch-live::admin.nav.settings'),
+                    'twitch-live.admin.streamers.index' => trans('twitch-live::admin.nav.streamers'),
+                    'twitch-live.admin.settings' => trans('twitch-live::admin.nav.settings'),
                 ],
             ],
         ];

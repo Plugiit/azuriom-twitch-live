@@ -1,5 +1,5 @@
 {
-    "id": "plugiit-twitch-live",
+    "id": "twitch-live",
     "name": "Plugiit Twitch Live",
     "description": "Affichez les streamers de votre communauté en direct sur Twitch : API Helix, filtres Minecraft et mot-clé, lecteur intégré, widget « En live maintenant », compteur dans le menu et déclaration des chaînes par les joueurs.",
     "version": "1.0.0",
@@ -9,7 +9,7 @@
     ],
     "azuriom_api": "1.1.0",
     "providers": [
-        "\\Azuriom\\Plugin\\PlugiitTwitchLive\\Providers\\PlugiitTwitchLiveServiceProvider",
-        "\\Azuriom\\Plugin\\PlugiitTwitchLive\\Providers\\RouteServiceProvider"
+        "\\Azuriom\\Plugin\\TwitchLive\\Providers\\TwitchLiveServiceProvider",
+        "\\Azuriom\\Plugin\\TwitchLive\\Providers\\RouteServiceProvider"
     ]
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Controllers;
+namespace Azuriom\Plugin\TwitchLive\Controllers;
 
 use Azuriom\Http\Controllers\Controller;
-use Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\LiveStreams;
+use Azuriom\Plugin\TwitchLive\Models\Streamer;
+use Azuriom\Plugin\TwitchLive\Twitch\LiveStreams;
 use Illuminate\Http\Request;
 
 class TwitchLiveController extends Controller
@@ -18,7 +18,7 @@ class TwitchLiveController extends Controller
         $streams = collect($state['streams']);
         $liveLogins = $streams->pluck('login');
 
-        return view('plugiit-twitch-live::index', [
+        return view('twitch-live::index', [
             'state' => $state,
             'streams' => $streams,
             'featured' => $streams->firstWhere('featured', true),

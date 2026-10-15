@@ -1,8 +1,8 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Twitch;
+namespace Azuriom\Plugin\TwitchLive\Twitch;
 
-use Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer;
+use Azuriom\Plugin\TwitchLive\Models\Streamer;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -18,17 +18,17 @@ class LiveStreams
     /**
      * Current state, expires after the configured cache duration.
      */
-    public const CACHE_KEY = 'plugiit-twitch-live.live';
+    public const CACHE_KEY = 'twitch-live.live';
 
     /**
      * Last successfully fetched state, kept forever as a fallback.
      */
-    public const LAST_KEY = 'plugiit-twitch-live.last';
+    public const LAST_KEY = 'twitch-live.last';
 
     /**
      * Twitch profiles (display name and avatar) of the streamers.
      */
-    public const USERS_KEY = 'plugiit-twitch-live.users';
+    public const USERS_KEY = 'twitch-live.users';
 
     public function __construct(protected ?TwitchClient $client = null) {}
 
@@ -128,7 +128,7 @@ class LiveStreams
     /**
      * Apply the filters, attach the community data and sort the streams.
      *
-     * @param  \Illuminate\Support\Collection<int, \Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer>  $streamers
+     * @param  \Illuminate\Support\Collection<int, \Azuriom\Plugin\TwitchLive\Models\Streamer>  $streamers
      */
     public function decorate(array $streams, Collection $streamers, array $profiles = []): array
     {
@@ -143,7 +143,7 @@ class LiveStreams
                 || strcasecmp($stream['game_name'], 'Minecraft') === 0)
             ->filter(fn (array $stream) => $keyword === null || Str::contains($stream['title'], $keyword, true))
             ->map(function (array $stream) use ($byLogin, $profiles) {
-                /** @var \Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer $streamer */
+                /** @var \Azuriom\Plugin\TwitchLive\Models\Streamer $streamer */
                 $streamer = $byLogin->get($stream['login']);
                 $profile = $profiles[$stream['login']] ?? null;
 
@@ -165,7 +165,7 @@ class LiveStreams
     /**
      * Get the Twitch profiles, refreshed once a day, and keep them on the streamers.
      *
-     * @param  \Illuminate\Support\Collection<int, \Azuriom\Plugin\PlugiitTwitchLive\Models\Streamer>  $streamers
+     * @param  \Illuminate\Support\Collection<int, \Azuriom\Plugin\TwitchLive\Models\Streamer>  $streamers
      */
     protected function profiles(TwitchClient $client, Collection $streamers): array
     {

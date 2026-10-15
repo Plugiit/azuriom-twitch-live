@@ -64,7 +64,7 @@ return [
         'never' => 'Never',
         'error' => 'Last error',
         'not_configured' => 'Missing Twitch credentials: no stream can be retrieved.',
-        'scheduler' => 'The scheduled task "plugiit-twitch-live:refresh" refreshes the streams automatically when the Laravel scheduler is configured (cron "php artisan schedule:run" every minute). Otherwise, the streams are refreshed on demand during visits, according to the cache duration.',
+        'scheduler' => 'The scheduled task "twitch-live:refresh" refreshes the streams automatically when the Laravel scheduler is configured (cron "php artisan schedule:run" every minute). Otherwise, the streams are refreshed on demand during visits, according to the cache duration.',
     ],
 
     'refresh' => [
@@ -74,7 +74,7 @@ return [
     ],
 
     'logs' => [
-        'plugiit-twitch-live-streamers' => [
+        'twitch-live-streamers' => [
             'created' => 'Added streamer #:id',
             'updated' => 'Updated streamer #:id',
             'deleted' => 'Deleted streamer #:id',

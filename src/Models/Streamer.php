@@ -1,10 +1,10 @@
 <?php
 
-namespace Azuriom\Plugin\PlugiitTwitchLive\Models;
+namespace Azuriom\Plugin\TwitchLive\Models;
 
 use Azuriom\Models\Traits\Loggable;
 use Azuriom\Models\User;
-use Azuriom\Plugin\PlugiitTwitchLive\Twitch\LiveStreams;
+use Azuriom\Plugin\TwitchLive\Twitch\LiveStreams;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -29,7 +29,7 @@ class Streamer extends Model
 {
     use Loggable;
 
-    public const CACHE_KEY = 'plugiit-twitch-live.streamers';
+    public const CACHE_KEY = 'twitch-live.streamers';
 
     public const STATUSES = ['approved', 'pending', 'rejected'];
 
@@ -43,7 +43,7 @@ class Streamer extends Model
      *
      * @var string
      */
-    protected $table = 'plugiit_twitch_live_streamers';
+    protected $table = 'twitch_live_streamers';
 
     /**
      * The attributes that are mass assignable.
