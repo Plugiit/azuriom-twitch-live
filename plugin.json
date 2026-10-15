@@ -2,7 +2,7 @@
     "id": "twitch-live",
     "name": "Plugiit Twitch Live",
     "description": "Affichez les streamers de votre communauté en direct sur Twitch : API Helix, filtres Minecraft et mot-clé, lecteur intégré, widget « En live maintenant », compteur dans le menu et déclaration des chaînes par les joueurs.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "url": "https://plugiit.dev",
     "authors": [
         "Plugiit"

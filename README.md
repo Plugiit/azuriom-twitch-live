@@ -4,7 +4,7 @@
 
 Show which of your community's streamers are live on Twitch, with an embedded player, a theme widget and a live counter in the navbar.
 
-Azuriom plugin · v1.0.0 · by Plugiit
+Azuriom plugin · v1.0.1 · by Plugiit
 
 ## Features
 
